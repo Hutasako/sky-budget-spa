@@ -11,6 +11,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -59,5 +60,6 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
 });
 
-Route::get('/auth/azure', [AzureAuthController::class, 'redirectToProvider'])->name('auth.azure.redirect');
-Route::get('/auth/azure/callback', [AzureAuthController::class, 'handleProviderCallback'])->name('auth.azure.callback');
+
+Route::get('auth/azure', [AzureAuthController::class, 'redirectToProvider'])->name('auth.azure.redirect');
+Route::get('auth/azure/callback', [AzureAuthController::class, 'handleProviderCallback'])->name('auth.azure.callback');

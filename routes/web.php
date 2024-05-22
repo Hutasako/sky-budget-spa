@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AzureAuthController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +13,7 @@ Route::get('/', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
