@@ -20,11 +20,12 @@ class ProjectsFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_id' => $this->faker->randomNumber(),
-            'customer_name' => $this->faker->name(),
+            'customer_id' => $this->faker->numerify('CUST-####'),
+            'customer_name' => $this->faker->company(),
             'user_rep_id' => $this->faker->randomElement(User::all()->pluck('id')->toArray()),
+            'project_number' => $this->faker->numerify('PROJ-####'),
             'project_name' => $this->faker->name(),
-            'branch' => $this->faker->name(),
+            'branch' => $this->faker->city(),
             'period_year' => '2023',
             'labor' => $this->faker->randomFloat(2, 0, 1000),
             'labor_margin' => $this->faker->randomFloat(2, 0, 100),
