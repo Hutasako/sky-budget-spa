@@ -860,7 +860,7 @@ export default {
                     'm-0',
 
                     // Shape
-                    'opacity-0',
+                    'opacity-1',
                     'rounded-md',
                     'outline-none',
                     'border-2 border-surface-200 dark:border-surface-700',
@@ -964,7 +964,7 @@ export default {
                     'm-0',
 
                     // Shape
-                    'opacity-0',
+                    'opacity-1',
                     'rounded-md',
                     'outline-none',
                     'border-2 border-surface-200 dark:border-surface-700',
@@ -1062,7 +1062,7 @@ export default {
                     'm-0',
 
                     // Shape
-                    'opacity-0',
+                    'opacity-1',
                     'rounded-md',
                     'outline-none',
                     'border-2 border-surface-200 dark:border-surface-700',
