@@ -5,8 +5,16 @@ import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import { plugin as FormKitPlugin, defaultConfig } from '@formkit/vue'
+
 import PrimeVue from 'primevue/config';
 import Lara from '../presets/lara';
+
+import Slider from 'primevue/slider';
+import DataTable from 'primevue/datatable';
+import InputText from 'primevue/inputtext';
+
+
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
@@ -17,6 +25,10 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue)
             .use(PrimeVue, { unstyled: true, pt: Lara })
+            .use(FormKitPlugin, defaultConfig)
+            .component("Slider", Slider)
+            .component("DataTable", DataTable)
+            .component("InputText", InputText)
             .mount(el);
     },
     progress: {

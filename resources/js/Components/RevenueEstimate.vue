@@ -1,15 +1,32 @@
 <script setup>
 import { ref } from 'vue'
-import Slider from 'primevue/slider';
 import InputText from 'primevue/inputtext';
+
+const props = defineProps({'laborRate': Number})
+const value = ref(props.laborRate);
+const rentalModel = defineModel('labor');
 
 </script>
 <template>
 
-            <div>
-                <InputText v-model.number="value" />
-                <Slider name="revEstimate" type="number" placeholder="Enter revenue estimate"/>
-            </div>
+    <div class="grid grid-cols-4 gap-4">
+        <div class="">
+            <InputText v-model="value" class="w-full mb-3" />
+            <input v-model="value" type="range" />
+        </div>
+        <div class="">
+            <InputText v-model="rentalModel" class="w-full mb-3" />
+            <input v-model="rentalModel" type="range" />
+        </div>
+        <div class="">
+            <InputText v-model="value" class="w-full mb-3" />
+            <input v-model="value" type="range" />
+        </div>
+        <div class="">
+            <InputText v-model="value" class="w-full mb-3" />
+            <input v-model="value" type="range" />
+        </div>
+    </div>
     <!-- <div class="flex flex-row">
 
         <div>
