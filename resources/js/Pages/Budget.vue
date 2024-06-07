@@ -15,13 +15,9 @@ const rental = ref(50);
 
 const input = ref(null);
 const selectedProjects = ref([]);
-
-const castNumber = (node) => {
-  node.hook.input((value, next) => next(Number(value)))
-}
-
+const estimations = ref([]);
 const max_sum = (node, max = 100) => {
-  return Object.values(node.value).reduce((a, b) => a + b) <= max
+  return Object.values(node.value).reduce((a, b) => Number(a) + Number(b)) <= max
 }
 
 </script>
@@ -66,71 +62,69 @@ const max_sum = (node, max = 100) => {
                     <div class="p-6 text-gray-900">
                     <DataTable :value="selectedProjects">
                         <template #header>
-                                    <h2 class=" font-semibold text-xl leading-tight">Revenue estimate</h2>
-                                    <h3>Enter the projected total revenue and the % breakdown.</h3>
+                                    <h2 class=" font-semibold text-xl leading-tight">Projects Estimate Entry</h2>
+                                    <h3>Enter your potential projects going into the next year.</h3>
                             </template>
                         <Column field="project_number" header="Project Number"></Column>
                         <Column field="project_name" header="Project Name"></Column>
                         <Column field="customer_name" header="Customer Name"></Column>
-                        <Column header="Revenue estimate">
+                        <Column header="Estimate"  class="flex flex-row">
                             <template #body>
-                                <FormKit
-                                type="form"
-                                :plugins="[castNumber]"
-                                #default = "{ value }"
-                                >
-
-                                    <FormKit type="text" label="Revenue estimate"/>
-
+                                    <FormKit outer-class="mx-6" type="text" label="Revenue"/>
                                     <FormKit
                                     type="group"
-                                    name="breakdown"
+                                    name="Revenue breakdown"
                                     id="breakdown"
                                     :validation-rules="{max_sum}"
                                     validation-visibility="live"
                                     validation="max_sum"
                                     :validation-messages="{
-                                        max_sum: ({ name, args }) => `${name} has exceeded the max budget of 100.`,
+                                        max_sum: ({ name, args }) => `Total ${name} cannot be greater than 100%.`,
                                     }"
                                     #default="{ id, messages, fns, classes }"
                                     >
                                         <FormKit type="number"
+                                        outer-class="mx-6"
+                                        input-class="w-32"
                                         label="Labor revenue %"
-                                        value="20"
+                                        value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
+                                        outer-class="mx-6"
+                                        input-class="w-32"
                                         label="Rental revenue %"
                                         value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
+                                        outer-class="mx-6"
+                                        input-class="w-32"
                                         label="Sales revenue %"
                                         value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
+                                        outer-class="mx-6"
+                                        input-class="w-32"
                                         label="Other revenue %"
                                         value="25"
                                         step="1"
                                         />
 
                                         <ul :class="classes.messages" v-if="fns.length(messages)">
-                                        <li
-                                            v-for="message in messages"
-                                            :key="message.key"
-                                            :class="classes.message"
-                                            :id="`${id}-${message.key}`"
-                                            :data-message-type="message.type"
-                                        >
-                                            {{ message.value }}
-                                        </li>
+                                            <li
+                                                v-for="message in messages"
+                                                :key="message.key"
+                                                :class="classes.message"
+                                                :id="`${id}-${message.key}`"
+                                                :data-message-type="message.type"
+                                            >
+                                                {{ message.value }}
+                                            </li>
                                         </ul>
                                     </FormKit>
-                                </FormKit>
-
                             </template>
-
                         </Column>
                     </DataTable>
                     </div>
