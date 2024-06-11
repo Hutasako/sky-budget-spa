@@ -19,8 +19,12 @@ const estimations = ref([]);
 const max_sum = (node, max = 100) => {
   return Object.values(node.value).reduce((a, b) => Number(a) + Number(b)) <= max
 }
-
+const form = reactive({
+    user_id: null,
+    projects: [],
+})
 </script>
+
 
 <template>
 <Head title="Budget Generator" />
@@ -62,14 +66,21 @@ const max_sum = (node, max = 100) => {
                     <div class="p-6 text-gray-900">
                     <DataTable :value="selectedProjects">
                         <template #header>
-                                    <h2 class=" font-semibold text-xl leading-tight">Projects Estimate Entry</h2>
-                                    <h3>Enter your potential projects going into the next year.</h3>
-                            </template>
+                                <h2 class=" font-semibold text-xl leading-tight">Projects Estimate Entry</h2>
+                                <h3>Enter your potential projects going into the next year.</h3>
+                        </template>
                         <Column field="project_number" header="Project Number"></Column>
                         <Column field="project_name" header="Project Name"></Column>
                         <Column field="customer_name" header="Customer Name"></Column>
-                        <Column header="Estimate"  class="flex flex-row">
+                        <Column class="flex flex-row" headerClass="custom-class">
+                            <template #header ">
+                                <div class="m-auto">
+                                    <h2>Estimate</h2>
+                                </div>
+                            </template>
                             <template #body>
+                                <div class="m-auto flex flex-row">
+
                                     <FormKit outer-class="mx-6" type="text" label="Revenue"/>
                                     <FormKit
                                     type="group"
@@ -124,6 +135,8 @@ const max_sum = (node, max = 100) => {
                                             </li>
                                         </ul>
                                     </FormKit>
+                                </div>
+
                             </template>
                         </Column>
                     </DataTable>
@@ -133,3 +146,8 @@ const max_sum = (node, max = 100) => {
         </div>
 </AuthenticatedLayout>
 </template>
+<style>
+    .custom-class > div[data-pc-section="headercontent"] {
+        width: 100%;
+    }
+</style>
