@@ -1,6 +1,8 @@
 import './bootstrap';
 import '../css/app.css';
 
+import 'primeicons/primeicons.css'
+
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
@@ -13,7 +15,7 @@ import Lara from '../presets/lara';
 import Slider from 'primevue/slider';
 import DataTable from 'primevue/datatable';
 import InputText from 'primevue/inputtext';
-
+import Tooltip from 'primevue/tooltip';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -29,6 +31,7 @@ createInertiaApp({
             .component("Slider", Slider)
             .component("DataTable", DataTable)
             .component("InputText", InputText)
+            .directive('tooltip', Tooltip)
             .mount(el);
     },
     progress: {
