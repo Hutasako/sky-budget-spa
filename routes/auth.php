@@ -19,8 +19,10 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
-                ->name('login');
+    // Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    //             ->name('login');
+    Route::get('login', [AzureAuthController::class, 'redirectToProvider'])->name('login');
+
 
     Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
@@ -61,5 +63,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('auth/azure', [AzureAuthController::class, 'redirectToProvider'])->name('auth.azure.redirect');
+// Route::get('auth/azure', [AzureAuthController::class, 'redirectToProvider'])->name('auth.azure.redirect');
 Route::get('auth/azure/callback', [AzureAuthController::class, 'handleProviderCallback'])->name('auth.azure.callback');

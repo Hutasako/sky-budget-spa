@@ -1,12 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
-import PrimeButton from "primevue/button";
-import RevenueEstimate from "../Components/RevenueEstimate.vue";
-
+import Button from 'primevue/button';
 import Column from 'primevue/column';
-
+import Divider from 'primevue/divider';
 
 defineProps({projects: Object})
 
@@ -35,44 +33,50 @@ const form = reactive({
 
         <div class="py-12">
             <div class="max-w-12xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg mb-6">
-                    <div class="p-6 text-gray-900">
+                <div class="bg-slate-200 shadow-sm sm:rounded-lg mb-6">
+                    <div class="p-6 text-gray-900 ">
 
                         <DataTable v-model:selection="selectedProjects" :value="projects"  selectionMode="multiple" dataKey="id">
-                            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
+                            <Column selectionMode="multiple" headerStyle="width: 3rem"  class="border-black"></Column>
                             <template #header>
                                     <h2 class=" font-semibold text-xl leading-tight">Projects Carryover - 2024</h2>
                                     <h3>Select projects that will carryover to the next year.</h3>
                             </template>
-                            <Column field="project_number" header="Project Number"></Column>
-                            <Column field="project_name" header="Project Name"></Column>
-                            <Column field="customer_name" header="Customer Name"></Column>
-                            <Column field="net_revenue" header="2023 Net Revenue"></Column>
-                            <!-- <Column header="Revenue Estimate">
-                                <template #body="dataProps">
-                                    <RevenueEstimate :laborRate="labor" v-model:labor="rental"/>
-                                    <div class="grid grid-cols-4 gap-4">
-                                    <InputText :id="`input_${dataProps.data.id}`" v-model="value" class="w-full mb-3" />
-                                    <input v-model="value" type="range" />
-                                    <input type="text" ref="input" />
-                                    {{ dataProps.data.id }}
-                                    </div>
-                                </template>
-                            </Column> -->
+                            <Column field="project_number" header="Project Number"  class="border-black"></Column>
+                            <Column field="project_name" header="Project Name"  class="border-black"></Column>
+                            <Column field="customer_name" header="Customer Name"  class="border-black"></Column>
+                            <Column field="net_revenue" header="2023 Net Revenue"  class="border-black"></Column>
                         </DataTable>
                     </div>
                 </div>
-                <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
+                <div class="bg-slate-200 shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
-                    <DataTable :value="selectedProjects">
+                    <DataTable :value="selectedProjects" dataKey="id">
                         <template #header>
                                 <h2 class=" font-semibold text-xl leading-tight">Projects Estimate Entry</h2>
                                 <h3>Enter your potential projects going into the next year.</h3>
                         </template>
-                        <Column field="project_number" header="Project Number"></Column>
-                        <Column field="project_name" header="Project Name"></Column>
-                        <Column field="customer_name" header="Customer Name"></Column>
-                        <Column class="flex flex-row" headerClass="custom-class">
+                        <Column header="Project Name" class="border-black">
+                            <template #body="dataProps">
+                                <div >
+                                    {{ dataProps.data.project_name}}
+
+                                    <span v-tooltip.top="{
+                                                    value: `${dataProps.data.project_number}`,
+                                                    pt: {
+                                                        arrow: {
+                                                            class: ['bg-slate-200']
+                                                        },
+                                                        text: ['bg-primaryfont-medium', 'p-2', 'bg-slate-200', 'rounded-md', 'ring-2'],
+                                                    }
+                                                }" class="pi pi-question-circle" style="color: silver"></span>
+                                </div>
+                                </template>
+                        </Column>
+
+                        <Column field="customer_name" header="Customer Name"  class="border-black"></Column>
+                        <Column field="segment" header="Segment"  class="border-black"></Column>
+                        <Column class="flex flex-row border-black" headerClass="custom-class">
                             <template #header ">
                                 <div class="m-auto">
                                     <h2>Estimate</h2>
@@ -81,7 +85,7 @@ const form = reactive({
                             <template #body>
                                 <div class="m-auto flex flex-row">
 
-                                    <FormKit outer-class="mx-6" type="text" label="Revenue"/>
+                                    <FormKit outer-class="mx-6" input-class=" rounded" type="text" label="Revenue ($)"/>
                                     <FormKit
                                     type="group"
                                     name="Revenue breakdown"
@@ -96,34 +100,42 @@ const form = reactive({
                                     >
                                         <FormKit type="number"
                                         outer-class="mx-6"
-                                        input-class="w-32"
+                                        input-class="w-32 rounded"
                                         label="Labor revenue %"
                                         value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
                                         outer-class="mx-6"
-                                        input-class="w-32"
+                                        input-class="w-32 rounded"
                                         label="Rental revenue %"
                                         value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
                                         outer-class="mx-6"
-                                        input-class="w-32"
+                                        input-class="w-32 rounded"
                                         label="Sales revenue %"
                                         value="25"
                                         step="1"
                                         />
                                         <FormKit type="number"
                                         outer-class="mx-6"
-                                        input-class="w-32"
+                                        input-class="w-32 rounded"
                                         label="Other revenue %"
                                         value="25"
                                         step="1"
                                         />
-
-                                        <ul :class="classes.messages" v-if="fns.length(messages)">
+                                        <span  v-if="fns.length(messages)" v-tooltip.top="{
+                                                    value: `${dataProps.data.project_number}`,
+                                                    pt: {
+                                                        arrow: {
+                                                            class: ['bg-slate-200']
+                                                        },
+                                                        text: ['bg-primaryfont-medium', 'p-2', 'bg-slate-200', 'rounded-md', 'ring-2'],
+                                                    }
+                                                }" class="pi pi-question-circle" style="color: silver"></span>
+                                        <ul v-if="fns.length(messages)">
                                             <li
                                                 v-for="message in messages"
                                                 :key="message.key"
@@ -136,7 +148,6 @@ const form = reactive({
                                         </ul>
                                     </FormKit>
                                 </div>
-
                             </template>
                         </Column>
                     </DataTable>
